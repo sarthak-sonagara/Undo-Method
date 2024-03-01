@@ -39,7 +39,7 @@ public class FileListener implements FileEditorManagerListener {
         if(psiFile==null) {
             return;
         }
-        ApplicationManager.getApplication().getService(UndoService.class).cleanUpMethods(psiFile);
+        ApplicationManager.getApplication().getService(UndoService.class).cleanUpFileMethods(psiFile);
         document.removeDocumentListener(changeListener);
     }
 }

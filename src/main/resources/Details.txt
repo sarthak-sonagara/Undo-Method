@@ -1,6 +1,7 @@
 Achieved:
     Method level Undo working
     All data is cleared when file is closed
+    Provides option to clear all data in Edit Menu
 
 Limitations:
     Only for Java
@@ -9,7 +10,6 @@ Limitations:
         Storing whole method body per change
     Character wise Undo
     Can't detect parameter, return type, method name changes
-    No cleanup method
 
 Implementation challanges:
     Implemented Listener, Action, Service

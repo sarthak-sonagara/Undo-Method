@@ -41,6 +41,12 @@
       <keyboard-shortcut first-keystroke="control alt U" keymap="$default"/>
     </action>
 
+    <action class="com.sms.undomethod.action.CleanUpAction"
+            id="com.sms.undomethod.action.CleanUpAction"
+            text="Clear Undo Methods"
+            description="Clears all methods undo history data">
+      <add-to-group group-id="EditMenu" anchor="before" relative-to-action="$Redo"/>
+    </action>
   </actions>
 
   <projectListeners>

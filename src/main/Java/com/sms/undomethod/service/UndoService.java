@@ -50,11 +50,15 @@ public final class UndoService {
         methodsMap.get(method).push(getMethodBody(method));
     }
 
-    public void cleanUpMethods(PsiFile file){
+    public void cleanUpFileMethods(PsiFile file){
         Collection<PsiMethod> methods = PsiTreeUtil.collectElementsOfType(file,PsiMethod.class);
         for(PsiMethod method : methods){
             methodsMap.remove(method);
         }
+    }
+
+    public void cleanUpAllMethods(){
+        methodsMap.clear();
     }
 }
 
