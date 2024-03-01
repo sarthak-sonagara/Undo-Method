@@ -1,0 +1,22 @@
+Achieved:
+    Method level Undo working
+    All data is cleared when file is closed
+
+Limitations:
+    Only for Java
+    Only for Methods
+    Occupies large memory
+        Storing whole method body per change
+    Character wise Undo
+    Can't detect parameter, return type, method name changes
+    No cleanup method
+
+Implementation challanges:
+    Implemented Listener, Action, Service
+    Keyboard shortcut + Menu option
+    Using own stack, not inbuilt
+    Before, replacing whole method made new method stack, solved by just changing body.
+    Made Listener stop listening changes when I("plugin code") updates the method, solved by using flag.
+    Before, without any changes if we press undo, clash with flag and resulted in lost of the first change.
+
+
