@@ -12,6 +12,7 @@ import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
+import com.sms.undomethod.entity.Action;
 import com.sms.undomethod.service.UndoService;
 import org.jetbrains.annotations.NotNull;
 
@@ -53,14 +54,16 @@ public class UndoAction extends AnAction {
         if(undoService.isUnchanged(method)){
             return;
         }
-        PsiElement oldContent = undoService.getUndoContent(method);
-        // write old content
-        WriteCommandAction.runWriteCommandAction(project, () -> {
-            undoService.setCodeChange(true);
-            method.getBody().replace(oldContent);
-        });
-        //save document
         Document document = editor.getDocument();
+        Action oldAction = undoService.getOldAction(method);
+        int startOffset = method.getTextRange().getStartOffset() + oldAction.getRelativeStart();
+        int endOffset = startOffset + oldAction.getLength();
+        // write old content
+        undoService.setCodeChange(true);
+        WriteCommandAction.runWriteCommandAction(project, () -> document.replaceString(startOffset, endOffset, oldAction.getContent()));
+        //set caret position
+        editor.getCaretModel().moveToOffset(startOffset+oldAction.getContent().length());
+        //save document
         FileDocumentManager.getInstance().saveDocument(document);
     }
 }

@@ -14,11 +14,11 @@
        Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
        Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
   <description>
-    Use undo functionality with method scope.
-    Limitations:
-      * Works with only method body
-      * Character wise undo
-      * Takes memory
+    <![CDATA[
+      <p>Use undo functionality with method scope</p>
+      <p>Suppose you first changed method A then method B, Now if you think to undo the changes of
+      method A only without changing method B at all.</p>
+    ]]>
   </description>
 
   <!-- Product and plugin compatibility requirements.

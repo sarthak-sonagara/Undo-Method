@@ -25,8 +25,9 @@ public class FileListener implements FileEditorManagerListener {
     @Override
     public void fileOpened(@NotNull FileEditorManager source, @NotNull VirtualFile file) {
         Document document = FileDocumentManager.getInstance().getDocument(file);
-        if(document!=null)
+        if(document!=null) {
             document.addDocumentListener(changeListener);
+        }
     }
 
     @Override
