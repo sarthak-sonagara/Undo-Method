@@ -39,5 +39,6 @@ public final class ChangeListener implements DocumentListener{
         int relativeOffset = eventOffset - methodOffset;
         Action oldAction = new Action(relativeOffset,event.getNewLength(), event.getOldFragment());
         undoService.putOldAction(method, oldAction);
+
     }
 }

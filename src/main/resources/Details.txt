@@ -14,6 +14,7 @@ Limitations:
 Upcoming Features:
     Auto delete earlier data if memory is less
     Buffered undo changes instead of character wise
+    Redo functionality
 
 Implementation challanges:
     Implemented Listener, Action, Service

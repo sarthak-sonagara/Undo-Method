@@ -19,4 +19,11 @@ public class Action {
     public CharSequence getContent() {
         return content;
     }
+
+    public boolean isSingleInsertion() {
+        return length==1 && content.isEmpty();
+    }
+    public boolean isSingleDeletion(){
+        return length==0 && content.length()==1;
+    }
 }

@@ -45,12 +45,36 @@ public final class UndoService {
         methodsMap.get(method).push(oldAction);
     }
     public Action getOldAction(PsiMethod method){
-        if(!methodsMap.containsKey(method))
+        if(isUnchanged(method))
             return Action.noAction;
         Stack<Action> methodStack = methodsMap.get(method);
-        if(methodStack.empty())
-            return Action.noAction;
-        return methodStack.pop();
+        Action top = methodStack.pop();
+        if(top.isSingleInsertion()){
+            int length = 1;
+            Action last = top;
+            while(!methodStack.empty()){
+                Action cur = methodStack.peek();
+                if(!cur.isSingleInsertion() && cur.getRelativeStart()!=last.getRelativeStart()+1)
+                    break;
+                length++;
+                last = methodStack.pop();
+            }
+            return new Action(last.getRelativeStart(),length,"");
+        }
+        else if(top.isSingleDeletion()){
+            StringBuilder content = new StringBuilder(top.getContent());
+            Action last = top;
+            while(!methodStack.empty()){
+                Action cur = methodStack.peek();
+                if(!cur.isSingleDeletion() && cur.getRelativeStart()!=last.getRelativeStart()-1){
+                    break;
+                }
+                content.append(cur.getContent());
+                last = methodStack.pop();
+            }
+            return new Action(top.getRelativeStart(),0,content);
+        }
+        return top;
     }
 }
 
