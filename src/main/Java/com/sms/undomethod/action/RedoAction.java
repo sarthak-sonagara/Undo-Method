@@ -16,7 +16,6 @@ import com.intellij.psi.PsiMethod;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.sms.undomethod.entity.Action;
 import com.sms.undomethod.service.RedoService;
-import com.sms.undomethod.service.UndoService;
 import org.jetbrains.annotations.NotNull;
 
 public class RedoAction extends AnAction {
