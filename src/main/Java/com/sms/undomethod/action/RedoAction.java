@@ -10,14 +10,16 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiMethod;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.sms.undomethod.entity.Action;
 import com.sms.undomethod.service.RedoService;
 import com.sms.undomethod.service.UndoService;
 import org.jetbrains.annotations.NotNull;
 
-public class UndoAction extends AnAction {
+public class RedoAction extends AnAction {
 
     @Override
     public @NotNull ActionUpdateThread getActionUpdateThread() {
@@ -37,8 +39,8 @@ public class UndoAction extends AnAction {
             return;
         }
         PsiMethod method = PsiTreeUtil.getParentOfType(element,PsiMethod.class);
-        UndoService undoService = ApplicationManager.getApplication().getService(UndoService.class);
-        e.getPresentation().setEnabledAndVisible(method!=null && undoService.isUndoAvailable(method));
+        RedoService redoService = ApplicationManager.getApplication().getService(RedoService.class);
+        e.getPresentation().setEnabledAndVisible(method!=null && redoService.isRedoAvailable(method));
     }
 
     @Override
@@ -54,21 +56,17 @@ public class UndoAction extends AnAction {
         if(project==null){
             return;
         }
-        UndoService undoService = ApplicationManager.getApplication().getService(UndoService.class);
         RedoService redoService = ApplicationManager.getApplication().getService(RedoService.class);
         assert method != null;
-        // get old content
-        Action userAction = undoService.getOldAction(method);
+        redoService.setCodeChange(true);
         Document document = editor.getDocument();
+        Action userAction = redoService.getUndoContent(method);
         int startOffset = method.getTextRange().getStartOffset() + userAction.getRelativeStart();
-        // putting redo action
-        redoService.putUndoContent(method,userAction);
-        // write old content
-        undoService.setCodeChange(true);
+        // redo
         WriteCommandAction.runWriteCommandAction(project, () ->
-                document.replaceString(startOffset, startOffset+userAction.getNewContent().length(), userAction.getOldContent()));
+                document.replaceString(startOffset, startOffset+userAction.getOldContent().length(), userAction.getNewContent()));
         //set caret position
-        editor.getCaretModel().moveToOffset(startOffset+userAction.getOldContent().length());
+        editor.getCaretModel().moveToOffset(startOffset+userAction.getNewContent().length());
         //save document
         FileDocumentManager.getInstance().saveDocument(document);
     }

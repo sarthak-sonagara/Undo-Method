@@ -11,6 +11,7 @@ import com.intellij.psi.PsiMethod;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.PsiUtil;
 import com.sms.undomethod.entity.Action;
+import com.sms.undomethod.service.RedoService;
 import com.sms.undomethod.service.UndoService;
 import org.jetbrains.annotations.NotNull;
 
@@ -31,13 +32,20 @@ public final class ChangeListener implements DocumentListener{
         if(method==null)
             return;
         UndoService undoService = ApplicationManager.getApplication().getService(UndoService.class);
+        RedoService redoService = ApplicationManager.getApplication().getService(RedoService.class);
         if(undoService.isCodeChange()) {
             undoService.setCodeChange(false);
             return;
         }
+        if(redoService.isCodeChange()){
+            redoService.setCodeChange(false);
+        }
+        else{
+            redoService.removeStackIfPresent(method);
+        }
         int methodOffset = method.getTextRange().getStartOffset();
         int relativeOffset = eventOffset - methodOffset;
-        Action oldAction = new Action(relativeOffset,event.getNewLength(), event.getOldFragment());
+        Action oldAction = new Action(relativeOffset,event.getOldFragment(), event.getNewFragment());
         undoService.putOldAction(method, oldAction);
     }
 }

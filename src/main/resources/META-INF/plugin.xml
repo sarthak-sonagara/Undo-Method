@@ -47,6 +47,14 @@
             description="Clears all methods undo history data">
       <add-to-group group-id="EditMenu" anchor="before" relative-to-action="$Redo"/>
     </action>
+
+    <action class="com.sms.undomethod.action.RedoAction"
+            id="com.sms.undomethod.action.RedoAction"
+            text="Redo Method"
+            description="Redo the last undo within a method">
+      <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+      <keyboard-shortcut first-keystroke="control alt shift U" keymap="$default"/>
+    </action>
   </actions>
 
   <projectListeners>

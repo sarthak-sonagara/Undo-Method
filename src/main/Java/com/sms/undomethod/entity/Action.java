@@ -1,22 +1,24 @@
 package com.sms.undomethod.entity;
 public class Action {
     private final int relativeStart;
-    private final int length;
-    private final CharSequence content;
-    public static final Action noAction = new Action(0,0,"");
+    private final CharSequence oldContent;
+    private final CharSequence newContent;
 
-    public Action(int relativeStart, int length, CharSequence content) {
-        this.relativeStart = relativeStart;
-        this.length = length;
-        this.content = content;
-    }
     public int getRelativeStart() {
         return relativeStart;
     }
-    public int getLength() {
-        return length;
+
+    public CharSequence getOldContent() {
+        return oldContent;
     }
-    public CharSequence getContent() {
-        return content;
+
+    public CharSequence getNewContent() {
+        return newContent;
+    }
+
+    public Action(int relativeStart, CharSequence oldContent, CharSequence newContent) {
+        this.relativeStart = relativeStart;
+        this.oldContent = oldContent;
+        this.newContent = newContent;
     }
 }
