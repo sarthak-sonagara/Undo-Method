@@ -30,7 +30,7 @@ public final class RedoService {
         }
         methodsMap.get(method).push(action);
     }
-    public Action getUndoContent(PsiMethod method){
+    public Action getUndoContent(PsiMethod method) {
         Stack<Action> methodStack = methodsMap.get(method);
         Action top = methodStack.pop();
         if(methodStack.isEmpty()){

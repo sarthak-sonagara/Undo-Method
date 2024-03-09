@@ -15,9 +15,21 @@
        Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
   <description>
     <![CDATA[
-      <p>Use undo functionality with method scope</p>
-      <p>Suppose you first changed method A then method B, Now if you think to undo the changes of
-      method A only without changing method B at all.</p>
+          <p>A Tool to Undo/Redo Last Actions at a Method Scope</p>
+
+    <h2>Use Case</h2>
+    <p>Imagine you have two methods, A and B. You wrote some code in method A, then you wrote some code in method B.
+        Now, if you think to undo the actions performed in A, you must undo the actions of method B. With Undo-Method,
+        you can undo/redo within a method.</p>
+
+    <h2>Usage</h2>
+    <p>Use (<span class="key-combination">Option + Command + U</span>) / (<span class="key-combination">Alt + Control + U</span>) for undo,<br>
+        Use (<span class="key-combination">Option + Command + Shift + U</span>) / (<span class="key-combination">Alt + Control + Shift + U</span>) for redo.</p>
+
+    <p>You may also right-click to view options in the menu. Use "Clear Undo Methods" from the Edit menu to remove all data.</p>
+
+    <h2>Learn More</h2>
+    <p>For more information, check out the <a href="https://github.com/sarthak-sonagara/Undo-Method" target="_blank">source code on GitHub</a>. You'll find usage instructions, limitations, and upcoming features in the README file.</p>
     ]]>
   </description>
 
